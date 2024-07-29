@@ -62,8 +62,9 @@ function validaChances(num){
         numerosJogados.push(num)
         somJogada.play()
         if(minhasJogadas === 6 && num != numeroAleatorio){      
-            //textoMsg(`Game Over !! O número secreto era ${numeroAleatorio} `)
-            //fimJogo()
+            displayJogadas(num)
+            textoMsg(`Game Over !! O número secreto era ${numeroAleatorio} `)
+            fimJogo()
         }
         else{
             displayJogadas(num)
@@ -102,11 +103,24 @@ function checarJogadas(num){
 function displayJogadas(num){
     caixaTexto.value = ''
     caixaTexto.focus()
-    jogadasAnteriores.innerHTML += `${num}, ` /*O que acontece qdo atingir 6 jogadas */
+    if(minhasJogadas <= 5 && num != numeroAleatorio){
+        jogadasAnteriores.innerHTML += `${num}, `
+    } 
+    else if(minhasJogadas == 6){
+        jogadasAnteriores.innerHTML += `${num}`
+    }
+    else if(num == numeroAleatorio){
+        jogadasAnteriores.innerHTML += `${num}`   
+    }
     minhasJogadas++
     jogadasRestantes.innerHTML = `${7 - minhasJogadas}`
 }
 
 function textoMsg(msg){
-    avisos.innerHTML = msg
+    avisos.innerHTML = `<h1>${msg}</h1>`
+}
+
+function fimJogo(){
+    caixaTexto.setAttribute('disabled', true)
+    botaoJogar.setAttribute('disabled', true)
 }
